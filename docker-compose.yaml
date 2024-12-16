@@ -1,0 +1,42 @@
+version: "2"
+
+services:
+  backend_${selectedRegion}:
+    container_name: ${CONTAINER_NAME_BACKEND}
+    image: ${BACKEND_IMAGE}
+    ports:
+      - '${PORT}:${PORT}'
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - AUTH_SECRET=${AUTH_SECRET}
+      - PORT=${PORT}
+      - SUPERADMINEMAIL=${SUPERADMINEMAIL}
+      - SERVICE=${SERVICE}
+      - HOST=${HOST}
+      - USERNAME_MAIL=${USERNAME_MAIL}
+      - EMAIL=${EMAIL}
+      - PASSWORD=${PASSWORD}
+      - EMAIL_FROM=${EMAIL_FROM}
+      - TEST_EMAIL=${TEST_EMAIL}
+      - REGION_NAME=${REGION_NAME}
+      - US_BASEURL=${US_BASEURL}
+      - CA_BASEURL=${CA_BASEURL}
+      - EU_BASEURL=${EU_BASEURL}
+      - AU_BASEURL=${AU_BASEURL}
+      - ZA_BASEURL=${ZA_BASEURL}
+    networks:
+      - msm_network
+
+  frontend:
+    container_name: msm-frontend
+    image: ${FRONTEND_IMAGE}
+    restart: unless-stopped
+    ports:
+      - '${FRONTEND_PORT}:80'
+    networks:
+      - msm_network
+
+networks:
+  msm_network:
+    external: true
